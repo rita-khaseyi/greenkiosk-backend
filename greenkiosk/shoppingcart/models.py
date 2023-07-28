@@ -3,6 +3,9 @@ from inventory.models import Product
 
 
 class ShoppingCart(models.Model):
+    # shopping cart has a manyToMany relationship with the inventory model
+    # i.e multiple products can be associated with multiple shopping cart
+    # instances and vice versa
     products = models.ManyToManyField(Product)
     product_name = models.CharField(max_length=32)
     quantity = models.PositiveIntegerField()
