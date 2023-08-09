@@ -19,16 +19,16 @@
             </tr>
         </thead>
         <tbody>
-            {% for review in reviews %}
+            {% for shipping in shippings %}
             <tr>
-                <td>{{ review.product_name }}</td>
-                <td>{{ review.rating }}</td>
-                <td>{{ review.comment }}</td>
+                <td>{{ shipping.order}}</td>
+                <td>{{ shipping.carrier}}</td>
+                <td>{{ shipping.status }}</td>
                 <td>
-                    <a href="{% url 'review_detail_view' id=review.id %}">View details</a>
+                    <a href="{% url 'shipping_detail_view' id=shipping.id %}">View details</a>
                 </td>
                 <td>
-                    <a href="{% url 'review_edit_view' id=review.id %}">Edit review</a>
+                    <a href="{% url 'shipping_edit_view' id=shipping.id %}">Edit review</a>
                 </td>
             </tr>
             {% endfor %}

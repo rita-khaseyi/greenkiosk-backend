@@ -19,7 +19,7 @@ def upload_shipping(request):
     # and the third is the data to be uploaded
 def shipping_list(request):
     shipping=Shipping.objects.all()
-    return render(request,'shipping/shipping_list.html',{'shipping':shipping})
+    return render(request,'shipping/shipping_list.html',{'shippings':shipping})
 def  shipping_detail(request,id):
     shipping=Shipping.objects.get(id=id)
     return render(request,'shipping/shipping_detail.html',{'shipping':shipping})
