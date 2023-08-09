@@ -1,11 +1,16 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/detail.css' %}">
     <title>Document</title>
 </head>
 <body>
+    <div class="card">
+
+   
     <h4> {{product.name}} </h4>
 
     <img src="{{product.image_url}}" />
@@ -13,28 +18,10 @@
     <p> {{ product.description}} </p>
 
     <span> {{product.price}} </span>
-
-    <button> add to cart </button>
+<a href="{% url 'shoppingcart_upload_view' %}"><button> add to cart </button></a>
+</div>
+    
+    
 </body>
-</html> -->
+</html> 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body style="font-family: Arial, sans-serif; text-align: center; margin: 20px;">
-    <h4 style="color: #333; text-transform: uppercase;">{{ product.name }}</h4>
-
-    <img src="{{ product.image }}" style="max-width: 100%; height: auto; margin: 20px 0; border: 1px solid #ccc; padding: 5px;">
-
-    <p style="color: #393333;">{{ product.description }}</p>
-
-    <span style="color: #25ce44; font-weight: bold; font-size: 20px;">{{ product.price }}</span>
-    <br>
-
-    <button style="background-color: #139123; color: #fff; border: none; padding: 10px 20px; font-size: 16px; margin-top: 20px; cursor: pointer; border-radius: 5px;">Add to Cart</button>
-</body>
-</html>

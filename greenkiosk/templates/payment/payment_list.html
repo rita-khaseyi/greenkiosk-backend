@@ -1,0 +1,49 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/product.css' %}">
+    <title>Document</title>
+
+ 
+ 
+</head>
+<body>
+    <table class="product-table">
+      
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Product Details</th>
+                <th>Edit Product</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payments %}
+            <tr>
+                <td>{{ payment.amount }}</td>
+                <td>{{ payment.status }}</td>
+                <td>{{ payment.payment_method }}</td>
+                <td>
+                    <a href="{% url 'payment_detail_view' id=payment.id %}">View details</a>
+                </td>
+                <td>
+                    <a href="{% url 'edit_payment_view' id=payment.id %}">Edit cart</a>
+                </td>
+               
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+

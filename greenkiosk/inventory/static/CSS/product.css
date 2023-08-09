@@ -1,0 +1,75 @@
+/* productlist.css */
+
+/* Reset default styles for better consistency */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic styling for the table */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Table header styles */
+.product-table thead th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Table body styles */
+.product-table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Alternate row background color for better readability */
+.product-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Style the "View details" link */
+.product-table tbody a {
+    display: inline-block;
+    padding: 6px 12px;
+    text-decoration: none;
+    background-color: #4bd31a;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.product-table tbody a:hover {
+    background-color: #0056b3;
+}
+
+/* Make the table responsive for smaller screens */
+@media screen and (max-width: 768px) {
+    .product-table {
+        font-size: 14px;
+    }
+    .product-table thead {
+        display: none; /* Hide the table header on small screens */
+    }
+    .product-table tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+    .product-table tbody td {
+        display: block;
+        text-align: right;
+        padding: 10px;
+    }
+    .product-table tbody td:before {
+        content: attr(data-label);
+        display: inline-block;
+        font-weight: bold;
+        width: 100px; /* Adjust as per your requirement */
+        margin-right: 10px;
+    }
+}

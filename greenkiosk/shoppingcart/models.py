@@ -14,5 +14,8 @@ class ShoppingCart(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
+    def total_price(self):
+        return sum(product.price for product in self.products.all())
+
     def __str__(self):
         return f"Shopping Cart {self.pk}"

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/detail.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+
+   
+    <h4> {{customer.name}} </h4>
+
+
+    <p> {{ customer.email}} </p>
+
+    <span> {{customer.phone_number}} </span>
+<a href="{% url 'customer_upload_view' %}"><button> save customer</button></a>
+</div>
+    
+    
+</body>
+</html> 
+

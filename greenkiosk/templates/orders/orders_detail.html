@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/detail.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+
+   
+    <h4> {{order.total_price}} </h4>
+
+
+    <p> {{ order.product_name}} </p>
+
+
+<a href="{% url 'order_upload_view' %}"><button> save order</button></a>
+</div>
+    
+    
+</body>
+</html> 
+

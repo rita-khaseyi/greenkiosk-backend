@@ -13,7 +13,9 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product_images/',null=True)  # Added image field
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    id=models.PositiveIntegerField(primary_key=True)
+    # id=models.PositiveIntegerField(primary_key=True)
 
     def __str__(self):
         return self.name
+    
+  

@@ -1,28 +1,41 @@
+
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/product.css' %}">
     <title>Document</title>
+
+ 
+ 
 </head>
 <body>
-    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-        <thead style="background-color: #145d22; font-weight: bold;">
+    <table class="product-table">
+      
+        <thead>
             <tr>
-                <th style="padding: 10px; text-align: left; border: 2px solid #650909;">Title</th>
-                <th style="padding: 10px; text-align: left; border: 1px solid #9e0f0f;">Description</th>
-                <th style="padding: 10px; text-align: left; border: 1px solid #ccc;">Price</th>
-                <th style="padding: 10px; text-align: left; border: 1px solid #ccc;">Product Details</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone number</th>
+                <th>Customer Details</th>
+                <th>Edit Customer</th>
             </tr>
         </thead>
         <tbody>
             {% for product in products %}
             <tr>
-                <td style="padding: 10px; text-align: left; border: 1px solid #ccc;">{{ product.name }}</td>
-                <td style="padding: 10px; text-align: left; border: 1px solid #ccc;">{{ product.description }}</td>
-                <td style="padding: 10px; text-align: left; border: 1px solid #ccc;">{{ product.price }}</td>
+                <td >{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
                 <td>
                     <a href="{% url 'products_detail_view' id=product.id %}">View details</a>
+                </td>
+                <td>
+                    <a href="{% url 'products_edit_view' id=product.id %}">Edit product</a>
                 </td>
             </tr>
             {% endfor %}
@@ -30,3 +43,6 @@
     </table>
 </body>
 </html>
+
+
+

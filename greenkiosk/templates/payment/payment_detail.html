@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/detail.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+
+   
+    <h4> {{ payment.amount }} </h4>
+
+    <img src="{{product.image_url}}" />
+
+    <p> {{ payment.status }} </p>
+
+    <span> {{ payment.payment_method }} </span>
+<a href="{% url 'paymentupload_view' %}"><button> Upload payment</button></a>
+</div>
+    
+
+</body>
+</html> 
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/product.css' %}">
+    <title>Review List</title>
+</head>
+<body>
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Review Details</th>
+                <th>Edit Review</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in reviews %}
+            <tr>
+                <td>{{ review.product_name }}</td>
+                <td>{{ review.rating }}</td>
+                <td>{{ review.comment }}</td>
+                <td>
+                    <a href="{% url 'review_detail_view' id=review.id %}">View details</a>
+                </td>
+                <td>
+                    <a href="{% url 'review_edit_view' id=review.id %}">Edit review</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

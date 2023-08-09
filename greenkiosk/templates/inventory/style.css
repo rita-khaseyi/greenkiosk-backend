@@ -1,24 +1,26 @@
-table {
+/* styles.css */
+.product-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-th, td {
+.product-table thead {
+    background-color: #145d22;
+    font-weight: bold;
+}
+
+.product-table th, .product-table td {
     padding: 10px;
     text-align: left;
     border: 1px solid #ccc;
 }
 
-thead {
-    background-color: #f2f2f2;
-    font-weight: bold;
+.product-table th {
+    border: 2px solid #650909;
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-tr:hover {
-    background-color: #e5e5e5;
+.product-table a {
+    text-decoration: none;
+    color: blue;
 }
