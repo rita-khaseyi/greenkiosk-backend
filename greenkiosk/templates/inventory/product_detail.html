@@ -5,23 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'CSS/detail.css' %}">
-    <title>Document</title>
+    <title>Product Detail</title>
 </head>
 <body>
     <div class="card">
-
-   
-    <h4> {{product.name}} </h4>
-
-    <img src="{{product.image_url}}" />
-
-    <p> {{ product.description}} </p>
-
-    <span> {{product.price}} </span>
-<a href="{% url 'shoppingcart_upload_view' %}"><button> add to cart </button></a>
-</div>
-    
-    
+        <h4>{{ product.name }}</h4>
+        
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }} Image">
+        {% endif %}
+        
+        <p>{{ product.description }}</p>
+        <span>{{ product.price }}</span>
+        <a href="{% url 'shoppingcart_upload_view' %}"><button>Add to Cart</button></a>
+    </div>
 </body>
-</html> 
-
+</html>
