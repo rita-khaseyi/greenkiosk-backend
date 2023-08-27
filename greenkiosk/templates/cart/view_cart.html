@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #0e5411;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+        .quantity-display {
+            font-weight: bold;
+            padding: 0 10px;
+        }
+        .btn {
+            background-color: #057d11;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #8ee41c;
+        }
+        .back-link {
+            margin-right: 20px;
+        }
+        .payment-link {
+            margin-top: 20px;
+        }
+        .price {
+            font-size: 24px;
+            margin-top: 10px;
+            text-align: center;
+            color: black;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Your Shopping Cart</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Image</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if selected_cart_item %}
+                <!-- Selected product row -->
+                <tr>
+                    <td>{{ selected_cart_item.product.name }}</td>
+                    <td><img src="{{ selected_cart_item.product.image.url }}" alt="{{ selected_cart_item.product.name }} Image"></td>
+                    <td>
+                        <form method="post" action="{% url 'update_cart_quantity' selected_cart_item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" name="action" value="decrease">-</button>
+                            <span class="quantity-display">{{ selected_cart_item.quantity }}</span>
+                            <button type="submit" name="action" value="increase">+</button>
+                        </form>
+                    </td>
+                    <td>${{ selected_cart_item.product.price }}</td>
+                    <td>${{ selected_cart_item.total_price }}</td>
+                    <td><a href="{% url 'remove_from_cart' selected_cart_item.id %}">Remove</a></td>
+                </tr>
+            {% endif %}
+            {% for cart_item in cart_items %}
+                {% if not selected_cart_item or cart_item != selected_cart_item %}
+                    <!-- Other cart item rows -->
+                    <tr>
+                        <td>{{ cart_item.product.name }}</td>
+                        <td><img src="{{ cart_item.product.image.url }}" alt="{{ cart_item.product.name }} Image"></td>
+                        <td>
+                            <form method="post" action="{% url 'update_cart_quantity' cart_item.id %}">
+                                {% csrf_token %}
+                                <button type="submit" name="action" value="decrease">-</button>
+                                <span class="quantity-display">{{ cart_item.quantity }}</span>
+                                <button type="submit" name="action" value="increase">+</button>
+                            </form>
+                        </td>
+                        <td>${{ cart_item.product.price }}</td>
+                        <td>${{ cart_item.total_price }}</td>
+                        <td><a href="{% url 'remove_from_cart' cart_item.id %}">Remove</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <p class="price">Total Price: ${{ total_price }}</p>
+    
+   
+    <div class="btn-container">
+        <a href="{% url 'products_list_view' %}" class="btn back-link">Back</a>
+        <a href="{% url 'payment:make_payment' %}" class="btn payment-link">Proceed to Payment</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    
+    <h1>Remove from Cart</h1>
+    <p>Are you sure you want to remove "{{ cart_item.product.name }}" from your cart?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, Remove</button>
+        <a href="{% url 'view_cart' %}">Cancel</a>
+    </form>
+    
+    {% endblock %}
+</body>
+</html>

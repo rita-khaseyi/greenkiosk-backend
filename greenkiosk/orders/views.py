@@ -1,34 +1,46 @@
-from django.shortcuts import render,redirect
-from .forms import ordersUploadForm
-from .models import Order
+# views.py
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Order, OrderItem
+from .forms import OrderForm
+from shoppingcart.models import ShoppingCart
 
-
-# Create your views here.
-def upload_order(request):
+def create_order(request):
+    cart = ShoppingCart.objects.get(user=request.user)
+    total_price = cart.total_price
+    
     if request.method == 'POST':
-        form = ordersUploadForm(request.POST, request.FILES)
+        form = OrderForm(request.POST)
         if form.is_valid():
-            form.save()
+            order = form.save(commit=False)
+            order.user = request.user
+            order.total_price = total_price
+            order.save()
             
+            for cart_item in cart.cart_items.all():
+                OrderItem.objects.create(
+                    order=order,
+                    product=cart_item.product,
+                    quantity=cart_item.quantity,
+                    unit_price=cart_item.product.price,
+                    total_price=cart_item.total_price
+                )
+            
+            # Clear the cart
+            cart.cart_items.all().delete()
+            
+            return redirect('order_confirmation', order_id=order.id)
     else:
-      form = ordersUploadForm()
-     
-    return render(request,'orders/orders_upload.html',{'form':form})
-def order_list(request):
-    order=Order.objects.all()
-    return render(request,'orders/orders_list.html',{'orders':order})
-def  order_detail(request,id):
-    cart=Order.objects.get(id=id)
-    return render(request,'orders/orders_detail.html',{'order':cart})
+        form = OrderForm()
+        
+    context = {
+        'form': form,
+        'total_price': total_price,
+    }
+    return render(request, 'orders/create_order.html', context)
 
-def edit_order_view(request,id):
-    order=Order.objects.get(id=id)
-    if request.method == 'POST':
-        form=ordersUploadForm(request.POST,instance=order)
-        if form.is_valid():
-            form.save()
-        return redirect('orders_detail_view,id=id')     
-    else:
-        form=ordersUploadForm(request.POST,instance=order)
-        return render(request,'orders/edit_orders.html',{'form':form  })     
-
+def order_confirmation(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    context = {
+        'order': order,
+    }
+    return render(request, 'orders/order_confirmation.html', context)

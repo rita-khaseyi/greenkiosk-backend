@@ -1,14 +1,11 @@
 from django import forms
 from .models import Review
 
-class reviewUploadForm(forms.ModelForm): 
-    
+class ReviewForm(forms.ModelForm):
     class Meta:
-        # defines the model
         model = Review
-        # renders all the fields in the form
-        fields = "__all__"
-
-        
-
-
+        fields = ['rating', 'content']
+        widgets = {
+            'rating': forms.RadioSelect(attrs={'class': 'rating-radio'}),
+            'content': forms.Textarea(attrs={'class': 'review-content'}),
+        }

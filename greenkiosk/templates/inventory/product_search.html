@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column; /* Added to arrange content */
+            align-items: center;
+            text-align: center;
+            min-height: 100vh; /* Ensures the content is at least the full viewport height */
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #1b8715;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #296112;
+        }
+
+        h3 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        ul {
+            display: flex; /* Display the list items in a flex layout */
+            flex-wrap: wrap; /* Allow the items to wrap to the next row */
+            justify-content: center; /* Center the items horizontally */
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 1; /* Equal width for all items */
+            margin: 10px;
+        }
+
+        img {
+            max-width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            margin: 0;
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        a {
+            color: #1b8715;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    {% block content %}
+    <h2>Product Search</h2>
+    <form method="get" action="{% url 'product_search' %}">
+        <input type="text" name="q" placeholder="Search for products">
+        <button type="submit">Search</button>
+    </form>
+
+    <h3>Products</h3>
+    <ul>
+        {% for product in products %}
+        <li>
+            <img src="{{ product.image.url }}" alt="Product Image" />
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.description }}</p>
+            <p>Price: {{ product.price }}</p>
+            <a href="{% url 'products_detail_view' product.id %}">View Details</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+
+</html>

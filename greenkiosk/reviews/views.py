@@ -1,33 +1,33 @@
-from django.shortcuts import render, redirect
-from .forms import reviewUploadForm
-from .models import Review
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .forms import ReviewForm
+from inventory.models import Product
+from reviews.models import Review
+from django.http import JsonResponse
 
-# Create your views here.
-def upload_review(request):
+@login_required
+def submit_review(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
     if request.method == 'POST':
-        form = reviewUploadForm(request.POST, request.FILES)
+        form = ReviewForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('review_list_view')  # Redirect to the review list view
+            review = form.save(commit=False)
+            review.user = request.user
+            review.product = product
+            review.save()
+
+            # Redirect to the product detail view
+            return redirect('products_detail_view', id=product.id)  # Adjust the URL name
+
     else:
-        form = reviewUploadForm()
-    return render(request, 'review/review_upload.html', {'form': form})
+        form = ReviewForm()
 
-def review_list(request):
-    reviews = Review.objects.all()
-    return render(request, 'review/review_list.html', {'reviews': reviews})
+    reviews = Review.objects.filter(product=product)  # Get reviews for the product
+    context = {
+        'product': product,
+        'form': form,
+        'reviews': reviews,
+    }
 
-def review_detail(request, id):
-    review = Review.objects.get(id=id)
-    return render(request, 'review/review_detail.html', {'review': review})
-
-def review_edit_view(request, id):
-    review = Review.objects.get(id=id)
-    if request.method == 'POST':
-        form = reviewUploadForm(request.POST, instance=review)
-        if form.is_valid():
-            form.save()
-            return redirect('review_detail_view', id=id)  # Redirect to the review detail view
-    else:
-        form = reviewUploadForm(instance=review)
-    return render(request, 'review/edit_review.html', {'form': form})
+    return render(request, 'review/submit_review.html', context)

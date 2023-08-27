@@ -1,9 +1,11 @@
-
-
 from django.contrib import admin
-from .models import Shipping
+from .models import ShippingAddress, ShippingMethod
 
-class ShippingAdmin(admin.ModelAdmin):
-    list_display = ('order', 'carrier', 'tracking_number', 'status', 'estimated_delivery')
+@admin.register(ShippingAddress)
+class ShippingAddressAdmin(admin.ModelAdmin):
+    list_display = ['user', 'address_line1', 'city', 'state', 'postal_code']
 
-admin.site.register(Shipping, ShippingAdmin)
+@admin.register(ShippingMethod)
+class ShippingMethodAdmin(admin.ModelAdmin):
+    list_display = ['name', 'cost', 'delivery_time']
+

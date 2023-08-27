@@ -1,48 +1,157 @@
-
-
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'CSS/product.css' %}">
-    <title>Document</title>
+    <title>Product Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            border-radius: 20px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 120vh;
+        }
 
- 
- 
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #1b8715;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #296112;
+        }
+
+        h3 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            margin: 10px;
+            text-align: center;
+        }
+
+        img {
+            max-width: 1000px;
+            height: auto;
+            margin: 0 auto 10px;
+            display: block;
+        }
+
+        h4 {
+            margin: 0;
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        a {
+            color: #1b8715;
+            text-decoration: none;
+        }
+        /* .btn {
+            background-color: #057d11;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+        } */
+        .btn:hover {
+            background-color: #8ee41c;
+        }
+        .action-button{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f7f7f7;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+         </style>
 </head>
+
 <body>
-    <table class="product-table">
-      
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone number</th>
-                <th>Customer Details</th>
-                <th>Edit Customer</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr>
-                <td >{{ product.name }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
-                <td>
-                    <a href="{% url 'products_detail_view' id=product.id %}">View details</a>
-                </td>
-                <td>
-                    <a href="{% url 'products_edit_view' id=product.id %}">Edit product</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% block content %}
+    
+    <form method="get" action="{% url 'product_search' %}">
+        <input type="text" name="q" placeholder="Search for products">
+        <button type="submit">Search</button>
+    </form>
+
+    <h3>Search Results</h3>
+    
+    <ul>
+        {% for product in products %}
+        <li>
+            <img src="{{ product.image.url }}" alt="Product Image" />
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.description }}</p>
+            <p>Price: {{ product.price }}</p>
+            
+            <div class="action-button">
+                <button ><a href="{% url 'products_detail_view' product.id %}">View Details</a></button>
+                <form action="{% url 'add_to_cart' product.id %}" method="post">
+                    {% csrf_token %}
+                    <button  type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
 </body>
+
 </html>
-
-
-

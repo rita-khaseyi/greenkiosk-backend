@@ -1,32 +1,36 @@
-from django.shortcuts import render,redirect
-from .forms import PaymentUploadForm
+from django.shortcuts import render, redirect,get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Payment
-# Create your views here.
+from shoppingcart.models import ShoppingCart
 
-def upload_product(request):
+@login_required
+def make_payment(request):
     if request.method == 'POST':
-        form = PaymentUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            
-    else:
-      form = PaymentUploadForm()
-     
-    return render(request,'payment/paymentupload.html',{'form':form})
-def payment_list(request):
-    payments=Payment.objects.all()
-    return render(request,'payment/payment_list.html',{'payments':payments})
-def  payment_detail(request,id):
-    payment=Payment.objects.get(id=id)
-    return render(request,'payment/payment_detail.html',{'payment':payment})
+        amount = request.POST['amount']
+        payment_method = request.POST['payment_method']
+        transaction_id = 134567
 
-def edit_payment_view(request,id):
-    payment=Payment.objects.get(id=id)
-    if request.method == 'POST':
-        form=PaymentUploadForm(request.POST,instance=payment)
-        if form.is_valid():
-            form.save()
-        return redirect('payment_detail_view,id=id')     
-    else:
-        form=PaymentUploadForm(request.POST,instance=payment)
-        return render(request,'payment/edit_payment.html',{'form':form  })    
+        payment = Payment.objects.create(
+            user=request.user,
+            amount=amount,
+            payment_method=payment_method,
+            transaction_id=transaction_id,
+            status='pending'
+        )
+
+        return redirect('payment:payment_confirmation', payment_id=payment.id)
+
+    # Get the total price from the cart
+    cart = ShoppingCart.objects.get_or_create(user=request.user)[0]
+    total_price = cart.total_price()
+
+    return render(request, 'payment/make_payment.html', {'total_price': total_price})
+
+@login_required
+def user_payments(request):
+    payments = Payment.objects.filter(user=request.user)
+    return render(request, 'payment/user_payments.html', {'payments': payments})
+@login_required
+def payment_confirmation(request, payment_id):
+    payment = get_object_or_404(Payment, id=payment_id, user=request.user)
+    return render(request, 'payment/payment_confirmation.html', {'payment': payment})

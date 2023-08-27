@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- payment/user_payments.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Your Payment History</h1>
+  <ul>
+    {% for payment in payments %}
+      <li>
+        Amount: {{ payment.amount }}
+        Payment Method: {{ payment.payment_method }}
+        Status: {{ payment.status }}
+        <a href="{% url 'payment:payment_confirmation' payment.id %}">Details</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+</body>
+</html>

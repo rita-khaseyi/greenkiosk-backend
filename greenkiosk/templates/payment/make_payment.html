@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            margin-bottom: 20px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #1b8715;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #296112;
+        }
+
+        a {
+            margin-top: 20px;
+            color: #1b8715;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+{% block content %}
+  <h1>Make Payment</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" value="{{ total_price }}" step="0.01" required>
+    <input type="hidden" name="payment_method" value="Mpesa"> <!-- Update payment method if needed -->
+    <button type="submit">Pay Now</button>
+  </form>
+  <a href="{% url 'view_cart' %}">Back to Cart</a>
+{% endblock %}
+</body>
+</html>

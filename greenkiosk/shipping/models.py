@@ -1,16 +1,15 @@
-
-
 from django.db import models
-from orders.models import Order
+from django.contrib.auth.models import User
 
-class Shipping(models.Model):
-    # shipping has a one-to-one relationship with the order model i.e each shipping instance
-    # belongs to exactly one order
-    order = models.OneToOneField(Order, on_delete=models.CASCADE,default=1)
-    carrier = models.CharField(max_length=255)
-    tracking_number = models.CharField(max_length=255)
-    status = models.CharField(max_length=32)
-    estimated_delivery = models.DateField()
+class ShippingAddress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    address_line1 = models.CharField(max_length=255)
+    address_line2 = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=20)
 
-    def __str__(self):
-        return f"Shipping for Order {self.order}"
+class ShippingMethod(models.Model):
+    name = models.CharField(max_length=100)
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    delivery_time = models.CharField(max_length=100)

@@ -10,7 +10,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     stock = models.PositiveIntegerField()
-    image = models.ImageField(upload_to='product_images/',null=True)  # Added image field
+    image = models.ImageField(upload_to='images/')  # Added image field
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     # id=models.PositiveIntegerField(primary_key=True)

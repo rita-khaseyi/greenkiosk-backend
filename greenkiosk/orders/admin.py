@@ -1,11 +1,16 @@
 from django.contrib import admin
+from .models import Order, OrderItem
 
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 1
 
-# Register your models here.
-from django.contrib import admin
-from .models import Order
-
+@admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('product_name', 'quantity', 'total_price', 'date_created')
+    list_display = ['user', 'status', 'total_price', 'created_at']
+    inlines = [OrderItemInline]
 
-admin.site.register(Order, OrderAdmin)
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ['order', 'product', 'quantity', 'unit_price', 'total_price']
+

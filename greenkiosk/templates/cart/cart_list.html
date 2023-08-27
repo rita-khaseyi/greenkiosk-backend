@@ -1,52 +1,106 @@
-
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'CSS/product.css' %}">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
 
- 
- 
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+
+        .product-card h3 {
+            margin: 10px 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .product-card p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .fa-check-circle {
+            color: #1b8715;
+            font-size: 20px;
+        }
+
+        .fa-trash {
+            color: #ff4136;
+            font-size: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .buttons a {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .buttons a:hover {
+            background-color: #f2f2f2;
+        }
+        .checkout-button{
+            margin-left: 50%;
+            padding: 30px;
+        }
+    </style>
+    <title>Checkout Products</title>
 </head>
 <body>
-    <table class="product-table">
-      
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total Price</th>
-                <th>View Product</th>
-                <th>Edit Product</th>
-            </tr>
-        </thead>
-        <tbody>STATIC_URL = '/static/'
-            {% for shopping in shoppings %}
-            <tr>
-                <td>{{ shopping.product_name }}</td>
-                <td>{{ shopping.quantity }}</td>
-                <td>{{ shopping.price}}</td>
-                <td>{{ shopping.total_price}}</td>
-                <td>
-                    <a href="{% url 'cart_detail_view' id=product.id %}">View details</a>
-                </td>
-                <td>
-                    <a href="{% url 'edit_cart_view' id=product.id %}">Edit cart</a>
-                </td>
-               
-               
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% include "navbar.html" %}
+  
+    {% for shopping in shoppings %}
+    <div class="product-card">
+        <h3>{{ shopping.product_name }}</h3>
+        <p>Quantity: {{ shopping.quantity }}</p>
+        <p>Price: {{ shopping.price }}</p>
+        <p>Total Price: {{ shopping.total_price }}</p>
+        <div class="icons">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-trash"></i>
+        </div>
+        <div class="buttons">
+            <a href="{% url 'cart_detail_view' id=shopping.id %}">View details</a>
+            <a href="{% url 'edit_cart_view' id=shopping.id %}">Edit cart</a>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <div class="checkout-button">
+        <h4>Total: 400</h4>
+        <h4>Shipping: 100</h4>
+        <a href="{% url 'payment_list_view'  %}"><button>Checkout</button></a>
+    </div>
 </body>
 </html>
-
-
 

@@ -1,14 +1,16 @@
-from django import forms
-from .models import ShoppingCart
 
-class ordersUploadForm(forms.ModelForm): 
+
+# forms.py
+from django import forms
+from .models import Order
+
+class OrderForm(forms.ModelForm):
+    shipping_address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter shipping address'}))
+    payment_method = forms.ChoiceField(choices=[
+        ('credit_card', 'Credit Card'),
+        ('paypal', 'PayPal'),
+    ], widget=forms.RadioSelect)
     
     class Meta:
-        # defines the model
-        model = ShoppingCart
-        # renders all the fields in the form
-        fields = "__all__"
-
-        
-
-
+        model = Order
+        fields = ['shipping_address', 'payment_method']

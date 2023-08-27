@@ -71,8 +71,8 @@ DATABASES = {
 # Password validation, Language and Time settings: You can keep the default settings here
 
 # Media settings
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
