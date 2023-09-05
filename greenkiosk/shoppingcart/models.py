@@ -8,8 +8,8 @@ class ShoppingCart(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
-    # def total_price(self):
-    #     # return sum(cart_item.total_price() for cart_item in self.cart_items.all())
+    def total_price(self):
+        return sum(cart_item.total_price() for cart_item in self.cart_items.all())
 
     def __str__(self):
        return f"Shopping Cart {self.pk}"

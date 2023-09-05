@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'user_profile',
     'order_tracking',
     'vendor',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
